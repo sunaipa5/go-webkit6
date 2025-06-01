@@ -1,6 +1,9 @@
 package webkit
 
-import "syscall"
+import (
+	"syscall"
+	"unsafe"
+)
 
 func WebViewNew() uintptr {
 	return webkitWebViewNew()
@@ -151,4 +154,19 @@ func WebViewEvaluateJavascript(webView uintptr, js string, length int64, cancell
 		userDataDestroy,
 		callbackData,
 	)
+}
+
+func NavigationPolicyDecisionGetNavigationAction(decision uintptr) uintptr {
+	return webkitNavigationPolicyDecisionGetNavigationAction(decision)
+}
+
+func NavigationActionGetRequest(navAction uintptr) uintptr {
+	return webkitNavigationActionGetRequest(navAction)
+}
+
+func UriRequestGetUri(request uintptr) string {
+	cstr := webkitUriRequestGetUri(request)
+	gostr := gostring(unsafe.Pointer(cstr))
+
+	return gostr
 }

@@ -1,6 +1,7 @@
 package webkit
 
 import (
+	"strings"
 	"syscall"
 	"unsafe"
 )
@@ -21,4 +22,16 @@ func cstring(s string) uintptr {
 		panic(err)
 	}
 	return uintptr(unsafe.Pointer(ptr))
+}
+
+func gostring(p unsafe.Pointer) string {
+	if p == nil {
+		return ""
+	}
+	const maxLen = 4096
+	str := unsafe.String((*byte)(p), maxLen)
+	if idx := strings.IndexByte(str, 0); idx != -1 {
+		return str[:idx]
+	}
+	return str
 }

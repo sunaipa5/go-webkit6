@@ -26,6 +26,11 @@ var (
 	webkitSecurityOriginNew       func(protocol, host *byte, port uint16) uintptr
 	webkitSecurityOriginNewForUri func(uintptr) uintptr
 
+	//Navigation
+	webkitNavigationPolicyDecisionGetNavigationAction func(uintptr) uintptr
+	webkitNavigationActionGetRequest                  func(uintptr) uintptr
+	webkitUriRequestGetUri                            func(uintptr) uintptr
+
 	//Network
 	webkitNetworkSessionNew         func(dataDir, cacheDir *byte) uintptr
 	webkitNetworkSessionGetDefault  func() uintptr
@@ -76,6 +81,11 @@ func init() {
 	//Security
 	purego.RegisterLibFunc(&webkitSecurityOriginNew, lib, "webkit_security_origin_new")
 	purego.RegisterLibFunc(&webkitSecurityOriginNewForUri, lib, "webkit_security_origin_new_for_uri")
+
+	//Navigation
+	purego.RegisterLibFunc(&webkitNavigationPolicyDecisionGetNavigationAction, lib, "webkit_navigation_policy_decision_get_navigation_action")
+	purego.RegisterLibFunc(&webkitNavigationActionGetRequest, lib, "webkit_navigation_action_get_request")
+	purego.RegisterLibFunc(&webkitUriRequestGetUri, lib, "webkit_uri_request_get_uri")
 
 	//Context
 	purego.RegisterLibFunc(&webkitWebContextNew, lib, "webkit_web_context_new")
