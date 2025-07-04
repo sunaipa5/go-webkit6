@@ -58,6 +58,19 @@ var (
 	webkitSettingsSetHardwareAccelerationPolicy   func(uintptr, int)
 	webkitSettingsSetEnableDeveloperExtras        func(uintptr, bool)
 
+	webkitSettingsSetAllowFileAccessFromFileUrls         func(uintptr, bool)
+	webkitSettingsSetAllowUniversalAccessFromFileUrls    func(uintptr, bool)
+	webkitSettingsSetEnable2dCanvasAcceleration          func(uintptr, bool)
+	webkitSettingsSetEnableHyperlinkAuditing             func(uintptr, bool)
+	webkitSettingsSetEnableMediaStream                   func(uintptr, bool)
+	webkitSettingsSetEnableMediaCapabilities             func(uintptr, bool)
+	webkitSettingsSetEnableEncryptedMedia                func(uintptr, bool)
+	webkitSettingsSetEnableSiteSpecificQuirks            func(uintptr, bool)
+	webkitSettingsSetEnableResizableTextAreas            func(uintptr, bool)
+	webkitSettingsSetEnableTabsToLinks                   func(uintptr, bool)
+	webkitSettingsSetEnableBackForwardNavigationGestures func(uintptr, bool)
+	webkitSettingsSetEnableWriteConsoleMessagesToStdout  func(uintptr, bool)
+
 	//permission
 	webkit_notification_permission_request_get_type func() uintptr
 	webkit_geolocation_permission_request_get_type  func() uintptr
@@ -109,6 +122,19 @@ func init() {
 	purego.RegisterLibFunc(&webkitSettingsSetAutoLoadImages, lib, "webkit_settings_set_auto_load_images")
 	purego.RegisterLibFunc(&webkitSettingsSetHardwareAccelerationPolicy, lib, "webkit_settings_set_hardware_acceleration_policy")
 	purego.RegisterLibFunc(&webkitSettingsSetEnableDeveloperExtras, lib, "webkit_settings_set_enable_developer_extras")
+
+	purego.RegisterLibFunc(&webkitSettingsSetAllowFileAccessFromFileUrls, lib, "webkit_settings_set_allow_file_access_from_file_urls")
+	purego.RegisterLibFunc(&webkitSettingsSetAllowUniversalAccessFromFileUrls, lib, "webkit_settings_set_allow_universal_access_from_file_urls")
+	purego.RegisterLibFunc(&webkitSettingsSetEnable2dCanvasAcceleration, lib, "webkit_settings_set_enable_2d_canvas_acceleration")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableHyperlinkAuditing, lib, "webkit_settings_set_enable_hyperlink_auditing")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableMediaStream, lib, "webkit_settings_set_enable_media_stream")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableMediaCapabilities, lib, "webkit_settings_set_enable_media_capabilities")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableEncryptedMedia, lib, "webkit_settings_set_enable_encrypted_media")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableSiteSpecificQuirks, lib, "webkit_settings_set_enable_site_specific_quirks")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableResizableTextAreas, lib, "webkit_settings_set_enable_resizable_text_areas")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableTabsToLinks, lib, "webkit_settings_set_enable_tabs_to_links")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableBackForwardNavigationGestures, lib, "webkit_settings_set_enable_back_forward_navigation_gestures")
+	purego.RegisterLibFunc(&webkitSettingsSetEnableWriteConsoleMessagesToStdout, lib, "webkit_settings_set_enable_write_console_messages_to_stdout")
 
 	//permission
 	purego.RegisterLibFunc(&webkit_permission_request_allow, lib, "webkit_permission_request_allow")
