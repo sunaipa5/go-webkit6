@@ -78,7 +78,7 @@ var (
 )
 
 func init() {
-	lib, err := purego.Dlopen("libwebkitgtk-6.0.so", purego.RTLD_LAZY|purego.RTLD_GLOBAL)
+	lib, err := purego.Dlopen("libwebkitgtk-6.0.so.4", purego.RTLD_LAZY|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
