@@ -2,8 +2,10 @@
 
 [WebkitGTK](https://webkitgtk.org/) 6.0 bindings for go. Written with [purego](https://github.com/ebitengine/purego). Compatible with [jwijenbergh/puregotk](https://github.com/jwijenbergh/puregotk)
 
-> This library is not useful by itself, you need a GTK library.
+## About features
+WebkitGTK is a very large library, so it is not possible for me to transfer all of its features. You can open feature request for the features you need.
 
+> This library is not useful by itself, you need a GTK library.
 
 ## Basic example with [jwijenbergh/puregotk](https://github.com/jwijenbergh/puregotk)
 
