@@ -170,3 +170,34 @@ func UriRequestGetUri(request uintptr) string {
 
 	return gostr
 }
+
+//Content Manager
+
+type ContentManager struct {
+	Ptr uintptr
+}
+
+func NewUserContentManager() *ContentManager {
+	managerPtr := webkit_user_content_manager_new()
+	return &ContentManager{
+		Ptr: managerPtr,
+	}
+}
+
+func (m *ContentManager) UserContentManagerRegisterScriptMessageHandler(name string, world_name string) bool {
+	status := webkit_user_content_manager_register_script_message_handler(m.Ptr, cstring(name), cstring(world_name))
+	if status == 1 {
+		return true
+	}
+
+	return false
+}
+
+func (m *ContentManager) UserContentManagerRegisterScriptMessageHandlerWithReply(name string, world_name string) bool {
+	status := webkit_user_content_manager_register_script_message_handler_with_reply(m.Ptr, cstring(name), cstring(world_name))
+	if status == 1 {
+		return true
+	}
+
+	return false
+}

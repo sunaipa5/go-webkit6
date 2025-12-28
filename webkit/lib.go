@@ -1,6 +1,8 @@
 package webkit
 
 import (
+	"os"
+
 	"github.com/jwijenbergh/purego"
 )
 
@@ -75,10 +77,28 @@ var (
 	webkit_notification_permission_request_get_type func() uintptr
 	webkit_geolocation_permission_request_get_type  func() uintptr
 	webkit_permission_request_allow                 func(uintptr)
+
+	//Content Manager
+	webkit_user_content_manager_new                                        func() uintptr
+	webkit_user_content_manager_register_script_message_handler            func(manager uintptr, name uintptr, world uintptr) int32
+	webkit_user_content_manager_register_script_message_handler_with_reply func(manager uintptr, name uintptr, world uintptr) int32
 )
 
+// You can change the library location with ldflag or set the WEBKITGTK_PATH environment variable.
+// -X main.WebKitGTKPath=/custom/path/libwebkitgtk-6.0.so.4
+// Don't change this variable while the application is running
+var WebKitGTKPath string
+
 func init() {
-	lib, err := purego.Dlopen("libwebkitgtk-6.0.so.4", purego.RTLD_LAZY|purego.RTLD_GLOBAL)
+	if WebKitGTKPath == "" {
+		if env := os.Getenv("WEBKITGTK_PATH"); env != "" {
+			WebKitGTKPath = env
+		} else {
+			WebKitGTKPath = "libwebkitgtk-6.0.so.4"
+		}
+	}
+
+	lib, err := purego.Dlopen(WebKitGTKPath, purego.RTLD_LAZY|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
@@ -140,5 +160,10 @@ func init() {
 	purego.RegisterLibFunc(&webkit_permission_request_allow, lib, "webkit_permission_request_allow")
 	purego.RegisterLibFunc(&webkit_notification_permission_request_get_type, lib, "webkit_notification_permission_request_get_type")
 	purego.RegisterLibFunc(&webkit_geolocation_permission_request_get_type, lib, "webkit_geolocation_permission_request_get_type")
+
+	//Content manager
+	purego.RegisterLibFunc(&webkit_user_content_manager_new, lib, "webkit_user_content_manager_new")
+	purego.RegisterLibFunc(&webkit_user_content_manager_register_script_message_handler, lib, "webkit_user_content_manager_register_script_message_handler")
+	purego.RegisterLibFunc(&webkit_user_content_manager_register_script_message_handler_with_reply, lib, "webkit_user_content_manager_register_script_message_handler_with_reply")
 
 }

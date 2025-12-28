@@ -2,7 +2,6 @@ package webkit
 
 import (
 	"strings"
-	"syscall"
 	"unsafe"
 )
 
@@ -17,11 +16,15 @@ func (x *GList) GoPointer() uintptr {
 }
 
 func cstring(s string) uintptr {
-	ptr, err := syscall.BytePtrFromString(s)
-	if err != nil {
-		panic(err)
+	if s == "" {
+		return uintptr(0)
 	}
-	return uintptr(unsafe.Pointer(ptr))
+
+	byteSlice := make([]byte, len(s)+1)
+	copy(byteSlice, s)
+	byteSlice[len(s)] = 0
+
+	return uintptr(unsafe.Pointer(&byteSlice[0]))
 }
 
 func gostring(p unsafe.Pointer) string {

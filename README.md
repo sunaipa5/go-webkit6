@@ -3,9 +3,19 @@
 [WebkitGTK](https://webkitgtk.org/) 6.0 bindings for go. Written with [purego](https://github.com/ebitengine/purego). Compatible with [jwijenbergh/puregotk](https://github.com/jwijenbergh/puregotk)
 
 ## About features
+
 WebkitGTK is a very large library, so it is not possible for me to transfer all of its features. You can open feature request for the features you need.
 
+Visit the [functions.md](https://github.com/sunaipa5/go-webkit6/blob/main/functions.md) to see imported functions
+
 > This library is not useful by itself, you need a GTK library.
+
+## Examples
+
+| Name                                                                       | Description                                           |
+| -------------------------------------------------------------------------- | ----------------------------------------------------- |
+| [simple](https://github.com/sunaipa5/go-webkit6/tree/main/examples/simple) | Basic usage                                           |
+| [bind](https://github.com/sunaipa5/go-webkit6/tree/main/examples/bind)     | Usage for WebKitGTK Script Message Handler (JS calls) |
 
 ## Basic example with [jwijenbergh/puregotk](https://github.com/jwijenbergh/puregotk)
 
