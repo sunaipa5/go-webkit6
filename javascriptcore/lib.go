@@ -33,21 +33,21 @@ var (
 	jscValueIsUndefined   func(uintptr) int32
 )
 
-// You can change the library location with ldflag or set the WEBKITGTK_PATH environment variable.
-// -X main.WebKitGTKPath=/custom/path/libwebkitgtk-6.0.so.4
+// You can change the library location with ldflag or set the JAVASCRIPTCOREGTK_PATH environment variable.
+// -X main.JavaScriptCoreGtkPath=/custom/path/libjavascriptcoregtk-6.0.so.1
 // Don't change this variable while the application is running
-var JavaScriptCorePath string
+var JavaScriptCoreGtkPath string
 
 func init() {
-	if JavaScriptCorePath == "" {
-		if env := os.Getenv("WEBKITGTK_PATH"); env != "" {
-			JavaScriptCorePath = env
+	if JavaScriptCoreGtkPath == "" {
+		if env := os.Getenv("JAVASCRIPTCOREGTK_PATH"); env != "" {
+			JavaScriptCoreGtkPath = env
 		} else {
-			JavaScriptCorePath = "libjavascriptcoregtk-6.0.so.1"
+			JavaScriptCoreGtkPath = "libjavascriptcoregtk-6.0.so.1"
 		}
 	}
 
-	lib, err := purego.Dlopen(JavaScriptCorePath, purego.RTLD_LAZY|purego.RTLD_GLOBAL)
+	lib, err := purego.Dlopen(JavaScriptCoreGtkPath, purego.RTLD_LAZY|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
