@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"runtime"
 	"unsafe"
 
 	"github.com/sunaipa5/go-webkit6/webkit"
@@ -64,8 +65,8 @@ func init_webview() *gtk.Widget {
 		panic(err)
 	}
 
-	baseDataDir := path.Join(userHome, "webkit6-test", "data")
-	baseCacheDir := path.Join(userHome, "webkit6-test", "cache")
+	baseDataDir := path.Join(userHome, "webkitgtk-test", "data")
+	baseCacheDir := path.Join(userHome, "webkitgtk-test", "cache")
 
 	/*
 		Create a new network session with base data dir and base cache dir
@@ -103,19 +104,23 @@ func init_webview() *gtk.Widget {
 	webkit.WebViewLoadUri(webview, "https://go.dev")
 
 	//Permission request handler
-	permissionFunc := func(webview, request, userData uintptr) {
+	permissionCallback := func(webview, request, userData uintptr) {
 		fmt.Println("Permission request")
 
+		instancePtr := (*gobject.TypeInstance)(unsafe.Pointer(request))
+		notificationType := types.GType(webkit.NotificationPermissionRequestGetType())
+
 		//Handle notification request
-		if gobject.TypeCheckInstanceIsA((*gobject.TypeInstance)(unsafe.Pointer(request)), types.GType(webkit.NotificationPermissionRequestGetType())) {
+		if gobject.TypeCheckInstanceIsA(instancePtr, notificationType) {
 			//Allow permission the notification request.
 			//After this, the notification will be shown.
 			webkit.PermissionRequestAllow(request)
 		}
+		runtime.KeepAlive(instancePtr)
 	}
 
 	//Create signal connection
-	gobject.SignalConnect(webview, "permission-request", glib.NewCallback(&permissionFunc))
+	gobject.SignalConnect(webview, "permission-request", glib.NewCallback(&permissionCallback))
 
 	return webviewWidget
 }

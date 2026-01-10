@@ -2,16 +2,15 @@ package webkit
 
 import (
 	"syscall"
-	"unsafe"
 )
 
 func WebViewNew() uintptr {
-	return webkitWebViewNew()
+	return webkit_web_view_new()
 }
 
 func WebViewLoadUri(webView uintptr, uri string) {
 	cstr := append([]byte(uri), 0)
-	webkitWebViewLoadURI(webView, &cstr[0])
+	webkit_web_view_load_uri(webView, &cstr[0])
 }
 
 /*
@@ -47,19 +46,19 @@ WebViewLoadHtml(webview, `
 func WebViewLoadHtml(webView uintptr, content, baseUri string) {
 	c := cstring(content)
 	b := cstring(baseUri)
-	webkitWebViewLoadHtml(webView, c, b)
+	webkit_web_view_load_html(webView, c, b)
 }
 
 func WebsiteDataManagerGetType() uintptr {
-	return webkitWebsiteDataManagerGetType()
+	return webkit_website_data_manager_get_type()
 }
 
 func WebContextGetType() uintptr {
-	return webkitWebContextGetType()
+	return webkit_web_context_get_type()
 }
 
 func WebViewGetType() uintptr {
-	return webkitWebViewGetType()
+	return webkit_web_view_get_type()
 }
 
 // Security
@@ -75,28 +74,28 @@ func SecurityOriginNew(protocol, host string, port uint16) uintptr {
 	p := cs(protocol)
 	h := cs(protocol)
 
-	return webkitSecurityOriginNew(p, h, port)
+	return webkit_security_origin_new(p, h, port)
 }
 
 func SecurityOriginNewForUri(uri string) uintptr {
-	return webkitSecurityOriginNewForUri(cstring(uri))
+	return webkit_security_origin_new_for_uri(cstring(uri))
 }
 
 // Network session
 func NetworkSessionNew(dataDir, cacheDir string) uintptr {
-	return webkitNetworkSessionNew(&[]byte(dataDir)[0], &[]byte(cacheDir)[0])
+	return webkit_network_session_new(&[]byte(dataDir)[0], &[]byte(cacheDir)[0])
 }
 
 func NetworkSessionGetDefault() uintptr {
-	return webkitNetworkSessionGetDefault()
+	return webkit_network_session_get_default()
 }
 
 func NetworkSessionIsEphemeral(session uintptr) bool {
-	return webkitNetworkSessionIsEphemeral(session)
+	return webkit_network_session_is_ephemeral(session)
 }
 
 func WebContextNew() uintptr {
-	return webkitWebContextNew()
+	return webkit_web_context_new()
 }
 
 /*
@@ -108,14 +107,14 @@ disallowed_origins  uintptr GList
 */
 
 func WebContextInitializeNotificationPermissions(context uintptr, allowed_origins, disallowed_origins uintptr) {
-	webkitWebContextInitializeNotificationPermissions(
+	webkit_web_context_initialize_notification_permissions(
 		context,
 		allowed_origins,
 		disallowed_origins,
 	)
 }
 func WebViewTryClose(webView uintptr) {
-	webkitWebViewTryClose(webView)
+	webkit_web_view_try_close(webView)
 }
 
 /*
@@ -144,7 +143,7 @@ callbackData    Additional callback data
 func WebViewEvaluateJavascript(webView uintptr, js string, length int64, cancellable uintptr, callback uintptr, userData uintptr, userDataDestroy uintptr, callbackData uintptr) {
 	jsPtr := cstring(js)
 
-	webkitWebViewEvaluateJavascript(
+	webkit_web_view_evaluate_javascript(
 		webView,
 		jsPtr,
 		int64(len(js)),
@@ -157,16 +156,16 @@ func WebViewEvaluateJavascript(webView uintptr, js string, length int64, cancell
 }
 
 func NavigationPolicyDecisionGetNavigationAction(decision uintptr) uintptr {
-	return webkitNavigationPolicyDecisionGetNavigationAction(decision)
+	return webkit_navigation_policy_decision_get_navigation_action(decision)
 }
 
 func NavigationActionGetRequest(navAction uintptr) uintptr {
-	return webkitNavigationActionGetRequest(navAction)
+	return webkit_navigation_action_get_request(navAction)
 }
 
 func UriRequestGetUri(request uintptr) string {
-	cstr := webkitUriRequestGetUri(request)
-	gostr := gostring(unsafe.Pointer(cstr))
+	cstr := webkit_uri_request_get_uri(request)
+	gostr := gostring(cstr)
 
 	return gostr
 }

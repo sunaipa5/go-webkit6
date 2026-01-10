@@ -1,0 +1,7 @@
+version: "3"
+
+tasks:
+  proxy_test:
+    cmds:
+      - go test -timeout 0 tests/utils.go tests/proxy_test.go
+    silent: true

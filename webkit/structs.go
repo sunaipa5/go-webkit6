@@ -1,9 +1,16 @@
 package webkit
 
-type JSCValue struct {
-	Ptr uintptr
-}
+type NetworkProxyMode uint
 
-type ScriptMessageReply struct {
-	Ptr uintptr
-}
+const (
+	WEBKIT_NETWORK_PROXY_MODE_DEFAULT  NetworkProxyMode = 0
+	WEBKIT_NETWORK_PROXY_MODE_NO_PROXY NetworkProxyMode = 1
+	WEBKIT_NETWORK_PROXY_MODE_CUSTOM   NetworkProxyMode = 2
+)
+
+type ProxyScheme string
+
+const (
+	Socks ProxyScheme = "socks://"
+	Http  ProxyScheme = "http://"
+)

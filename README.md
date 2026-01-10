@@ -16,6 +16,7 @@ Visit the [functions.md](https://github.com/sunaipa5/go-webkit6/blob/main/functi
 | -------------------------------------------------------------------------- | ----------------------------------------------------- |
 | [simple](https://github.com/sunaipa5/go-webkit6/tree/main/examples/simple) | Basic usage                                           |
 | [bind](https://github.com/sunaipa5/go-webkit6/tree/main/examples/bind)     | Usage for WebKitGTK Script Message Handler (JS calls) |
+| [proxy](https://github.com/sunaipa5/go-webkit6/tree/main/examples/proxy)   | Proxy usage                                           |
 
 ## Basic example with [jwijenbergh/puregotk](https://github.com/jwijenbergh/puregotk)
 

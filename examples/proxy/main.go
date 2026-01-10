@@ -1,15 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"os"
+	"path"
 
 	"github.com/jwijenbergh/puregotk/v4/adw"
 	"github.com/jwijenbergh/puregotk/v4/gio"
-	"github.com/jwijenbergh/puregotk/v4/glib"
 	"github.com/jwijenbergh/puregotk/v4/gobject"
 	"github.com/jwijenbergh/puregotk/v4/gtk"
-	jsc "github.com/sunaipa5/go-webkit6/javascriptcore"
 	"github.com/sunaipa5/go-webkit6/webkit"
 )
 
@@ -57,62 +55,27 @@ func activate(app *adw.Application) {
 
 func init_webview() *gtk.Widget {
 
-	manager := webkit.NewUserContentManager()
+	baseDataDir := path.Join("./", "webkitgtk-test", "data")
+	baseCacheDir := path.Join("./", "webkitgtk-test", "cache")
 
-	manager.UserContentManagerRegisterScriptMessageHandler("greet", "")
+	netsession := webkit.NetworkSessionNew(baseDataDir, baseCacheDir)
 
-	greet := func(
-		self uintptr,
-		JsResult uintptr,
-		userData uintptr,
-	) int32 {
-		if jsc.ValueIsString(JsResult) {
-			fmt.Println(jsc.ValueToString(JsResult))
-		} else {
-			fmt.Println("Value isn't string")
-		}
-		return 1
-	}
-
-	gobject.SignalConnect(
-		manager.Ptr,
-		"script-message-received::greet",
-		glib.NewCallback(&greet),
-	)
+	proxySettings := webkit.NetworkProxySettingsNew("socks://127.0.0.1:9050", nil)
+	webkit.NetworkSessionSetProxySettings(netsession, webkit.WEBKIT_NETWORK_PROXY_MODE_CUSTOM, proxySettings)
 
 	webviewObj := gobject.NewObject(
 		gobject.Type(webkit.WebViewGetType()),
-		"user-content-manager", manager.Ptr,
+		"network-session", netsession,
 	)
 
 	webview := webviewObj.Ptr
 
-	webviewWidget := gtk.WidgetNewFromInternalPtr(webview)
+	webViewWidget := gtk.WidgetNewFromInternalPtr(webview)
 
 	settings := webkit.WebViewGetSettings(webviewObj.Ptr)
 	webkit.SettingsSetEnableDeveloperExtras(settings, true)
 
-	webkit.WebViewLoadHtml(webview, `
-		<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>WebKitGTK JS Bind Test</title>
-</head>
-<body>
-<h1>WebKitGTK6 JS Bridge Test</h1>
-<button onclick="sendMessage()">Send Message to Go</button>
-<script>
-function sendMessage() {
-console.log("send message triggered");
-    window.webkit?.messageHandlers?.greet?.postMessage("Hello from JS!") ||
-    window.openInEditor?.("Hello from JS!");
-    console.log("send message done");
-}
-</script>
-</body>
-</html>
-`, "app://main")
+	webkit.WebViewLoadUri(webview, "https://check.torproject.org/")
 
-	return webviewWidget
+	return webViewWidget
 }

@@ -27,14 +27,14 @@ func cstring(s string) uintptr {
 	return uintptr(unsafe.Pointer(&byteSlice[0]))
 }
 
-func gostring(p unsafe.Pointer) string {
-	if p == nil {
+func gostring(p uintptr) string {
+	if p == 0 {
 		return ""
 	}
-	const maxLen = 4096
-	str := unsafe.String((*byte)(p), maxLen)
-	if idx := strings.IndexByte(str, 0); idx != -1 {
-		return str[:idx]
+	s := unsafe.String((*byte)(unsafe.Pointer(p)), 4096)
+
+	if idx := strings.IndexByte(s, 0); idx != -1 {
+		return s[:idx]
 	}
-	return str
+	return s
 }

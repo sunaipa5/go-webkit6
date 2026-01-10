@@ -31,6 +31,12 @@
 - webkit_network_session_new
 - webkit_network_session_get_default
 - webkit_network_session_is_ephemeral
+- webkit_network_proxy_settings_new
+- webkit_network_proxy_settings_free
+- webkit_network_session_set_proxy_settings
+- webkit_network_proxy_settings_add_proxy_for_scheme
+- webkit_authentication_request_is_for_proxy
+- webkit_network_proxy_settings_copy
 
 ## Settings
 
